@@ -1,24 +1,17 @@
 import { useState } from "react";
 
 function App() {
-  const [tags, setTags] = useState(["happy", "cheerfull", "excited"]);
-
+  const [bugs, setBugs] = useState([
+    { id: 1, title: "Bug 1", fixed: false },
+    { id: 2, title: "Bug 2", fixed: false },
+  ]);
   const handleClick = () => {
-    // we want when the button is clicked them the new item will be add to the array
-    // add
-    setTags([...tags, "greetings"]);
-
-    // Remove
-    setTags(tags.filter((tag) => tag !== "excited"));
-
-    // update
-    setTags(tags.map((tag) => (tag === "happy" ? "happiness" : tag)));
-
-    console.log(tags);
+    setBugs(bugs.map((bug) => (bug.id === 1 ? { ...bug, fixed: true } : bug)));
+    console.log(bugs);
   };
   return (
     <div>
-      <button onClick={handleClick}>Update Tags</button>
+      <button onClick={handleClick}>Update Bugs</button>
     </div>
   );
 }
