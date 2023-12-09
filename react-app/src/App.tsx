@@ -1,8 +1,10 @@
 import { useState } from "react";
 import ExpenseList from "./expense-tracker/component/ExpenseList";
 import ExpenseFilter from "./expense-tracker/component/ExpenseFilter";
+import ExpenseForm from "./expense-tracker/component/ExpenseForm";
 
-// here we are passing the expenses  array where as later we will setting the data by collecting the data from the form and sending it to the server
+export const categories = ["Groceries", "Utilities", "Entertainment"];
+
 function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [expenses, setExpenses] = useState([
@@ -26,6 +28,9 @@ function App() {
     : expenses;
   return (
     <div>
+      <div className="mb-3">
+        <ExpenseForm />
+      </div>
       <div className="mb-3">
         <ExpenseFilter
           onSelectCategory={(category) => setSelectedCategory(category)}
