@@ -1,18 +1,32 @@
-import ProductList from "./components/ProductList";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+interface Users {
+  id: number;
+  name: string;
+}
+
 function App() {
-  const connect = () => {
-    console.log("Connecting...");
-  };
-  const disconnect = () => {
-    console.log("Disconnecting...");
-  };
+  const [users, setUsers] = useState<Users[]>([]);
+
   useEffect(() => {
-    connect();
-    return () => disconnect();
-    // return is called when the component is unmounted or we can say that when the component is destroyed from the memory or when the component is removed from the DOM this is used for cleaning up the resources that are used by the component
-  });
-  return <div></div>;
+    axios
+      .get<Users[]>("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        // console.log(response.data[0].name);
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // this method returns a promise that resolves with the response data: promise an object that holds the eventual result or the failure of an asynchronous operations
+  }, []);
+  return (
+    <div>
+      {users.map((user) => (
+        <div key={user.id}>{user.name}</div>
+      ))}
+    </div>
+  );
 }
 
 export default App;
