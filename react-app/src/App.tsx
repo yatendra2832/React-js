@@ -7,7 +7,7 @@ interface Users {
 
 function App() {
   const [users, setUsers] = useState<Users[]>([]);
-
+  const [error, setError] = useState("");
   useEffect(() => {
     axios
       .get<Users[]>("https://jsonplaceholder.typicode.com/users")
@@ -16,15 +16,18 @@ function App() {
         setUsers(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        setError(error.message); // that is used to log the error in the console
       });
     // this method returns a promise that resolves with the response data: promise an object that holds the eventual result or the failure of an asynchronous operations
   }, []);
   return (
     <div>
-      {users.map((user) => (
-        <div key={user.id}>{user.name}</div>
-      ))}
+      {error && <p className="text-danger fw-bold fs-1">{error}</p>}
+      <ul>
+        {users.map((user) => (
+          <div key={user.id}>{user.name}</div>
+        ))}
+      </ul>
     </div>
   );
 }
