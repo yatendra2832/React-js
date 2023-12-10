@@ -1,23 +1,18 @@
 import ProductList from "./components/ProductList";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 function App() {
-  const [category, setCategory] = useState("");
-
-  return (
-    <div>
-      <select
-        className="form-select "
-        onChange={(event) => {
-          setCategory(event.target.value);
-        }}
-      >
-        <option value=""></option>
-        <option value="Clothing">Clothing</option>
-        <option value="HouseHold">HouseHold</option>
-      </select>
-      <ProductList category={category} />
-    </div>
-  );
+  const connect = () => {
+    console.log("Connecting...");
+  };
+  const disconnect = () => {
+    console.log("Disconnecting...");
+  };
+  useEffect(() => {
+    connect();
+    return () => disconnect();
+    // return is called when the component is unmounted or we can say that when the component is destroyed from the memory or when the component is removed from the DOM this is used for cleaning up the resources that are used by the component
+  });
+  return <div></div>;
 }
 
 export default App;
