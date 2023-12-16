@@ -1,6 +1,12 @@
+import PostList from "./components/PostList";
 import TodoList from "./components/TodoList";
 function App() {
-  return <TodoList />;
+  return (
+    <>
+      <TodoList />
+      <PostList />
+    </>
+  );
 }
 
 export default App;
