@@ -9,16 +9,14 @@ const TodoForm = () => {
   const addTodo = useMutation<Todo, Error, Todo>({
     mutationFn: (todo: Todo) =>
       axios
-        .post<Todo>("https://xjsonplaceholder.typicode.com/todos", todo)
+        .post<Todo>("https://jsonplaceholder.typicode.com/todos", todo)
         .then((res) => res.data),
     onSuccess: (savedTodo, newTodo) => {
-      // Approach:invalidating the cache
-      //   queryClient.invalidateQueries({ queryKey: ["todos"] });
-
-      // Approach 2:upating the data in the cache
       queryClient.setQueryData<Todo[]>(["todos"], (todos) => {
         return [savedTodo, ...(todos || [])];
       });
+       
+      if(ref.current) ref.current.value = "";
     },
   });
 
@@ -46,7 +44,9 @@ const TodoForm = () => {
           <input type="text" ref={ref} className="form-control" />
         </div>
         <div className="col">
-          <button className="btn btn-primary">Add</button>
+          <button className="btn btn-primary" disabled={addTodo.isLoading}>
+            {addTodo.isLoading ? "adding..." : "add"}
+          </button>
         </div>
       </form>
     </>
